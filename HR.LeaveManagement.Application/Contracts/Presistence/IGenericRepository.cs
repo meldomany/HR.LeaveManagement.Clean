@@ -6,7 +6,7 @@ namespace HR.LeaveManagement.Application.Contracts.Presistence
     {
         Task<IReadOnlyList<T>> GetAsync();
         Task<T> GetByIdAsync(int id);
-        Task CreateAsync(T entity);
+        Task<int> CreateAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
     }

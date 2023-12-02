@@ -23,6 +23,7 @@ namespace HR.LeaveManagement.API.Controllers
 
         // GET: api/<LeaveAllocationsController>
         [HttpGet]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<IReadOnlyList<LeaveAllocationDto>>> Get()
         {
             var leaveAllocations = await _mediator.Send(new GetAllLeaveAllocationListQuery());
@@ -32,6 +33,7 @@ namespace HR.LeaveManagement.API.Controllers
         // GET api/<LeaveAllocationsController>/5
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<LeaveAllocationDetailsDto>> Get(int id)
         {
             var leaveAllocationRequest = new GetLeaveAllocationDetailsQuery() { Id = id };
@@ -44,10 +46,11 @@ namespace HR.LeaveManagement.API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult> Post(CreateLeaveAllocationCommand request)
         {
             var leaveAllocationId = await _mediator.Send(request);
-            return CreatedAtAction(nameof(Get), leaveAllocationId);
+            return CreatedAtAction(nameof(Get), new { id = leaveAllocationId });
         }
 
         // PUT api/<LeaveAllocationsController>/5
@@ -55,6 +58,7 @@ namespace HR.LeaveManagement.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult> Put(UpdateLeaveAllocationCommand request)
         {
             await _mediator.Send(request);
@@ -63,6 +67,10 @@ namespace HR.LeaveManagement.API.Controllers
 
         // DELETE api/<LeaveAllocationsController>/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult> Delete(int id)
         {
             var deleteLeaveAllocationRequest = new DeleteLeaveAllocationCommand() { Id = id };

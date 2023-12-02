@@ -23,6 +23,7 @@ namespace HR.LeaveManagement.API.Controllers
 
         // GET: api/<LeaveTypesController>
         [HttpGet]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<List<LeaveTypeDto>>> Get()
         {
             var leaveTypes = await _mediator.Send(new GetLeaveTypesQuery());
@@ -31,6 +32,8 @@ namespace HR.LeaveManagement.API.Controllers
 
         // GET api/<LeaveTypesController>/5
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<LeaveTypeDetailsDto>> Get(int id)
         {
             var leaveType = await _mediator.Send(new GetLeaveTypesDetailsQuery(id));
@@ -41,6 +44,7 @@ namespace HR.LeaveManagement.API.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult> Post(CreateLeaveTypeCommand createLeaveType)
         {
             var creationId = await _mediator.Send(createLeaveType);
@@ -52,6 +56,7 @@ namespace HR.LeaveManagement.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult> Put(UpdateLeaveTypeCommand updateLeaveTypeCommand)
         {
             var result = await _mediator.Send(updateLeaveTypeCommand);
@@ -63,6 +68,7 @@ namespace HR.LeaveManagement.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult> Delete(int id)
         {
             var deleteLeaveTypeCommand = new DeleteLeaveTypeCommand() { Id = id };
