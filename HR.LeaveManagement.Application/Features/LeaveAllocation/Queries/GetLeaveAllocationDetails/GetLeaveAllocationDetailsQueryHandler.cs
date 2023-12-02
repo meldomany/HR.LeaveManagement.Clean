@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HR.LeaveManagement.Application.Contracts.Presistence;
+using HR.LeaveManagement.Application.Exceptions;
 using MediatR;
 
 namespace HR.LeaveManagement.Application.Features.LeaveAllocation.Queries.GetLeaveAllocationDetails
@@ -19,6 +20,10 @@ namespace HR.LeaveManagement.Application.Features.LeaveAllocation.Queries.GetLea
         public async Task<LeaveAllocationDetailsDto> Handle(GetLeaveAllocationDetailsQuery request, CancellationToken cancellationToken)
         {
             var leaveAllocation = await _leaveAllocationRepository.GetByIdAsync(request.Id);
+
+            if (leaveAllocation is null)
+                throw new NotFoundException(nameof(LeaveAllocation), request.Id);
+
             var leaveAllocationDto = _mapper.Map<LeaveAllocationDetailsDto>(leaveAllocation);
             return leaveAllocationDto;
         }
