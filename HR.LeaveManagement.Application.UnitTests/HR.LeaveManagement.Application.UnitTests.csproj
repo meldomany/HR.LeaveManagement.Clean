@@ -25,10 +25,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\LeaveTypes\" />
     <Folder Include="Features\LeaveAllocations\" />
     <Folder Include="Features\LeaveRequests\" />
     <Folder Include="Mocks\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HR.LeaveManagement.Application\HR.LeaveManagement.Application.csproj" />
   </ItemGroup>
 
 </Project>
